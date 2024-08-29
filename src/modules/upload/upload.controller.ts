@@ -1,6 +1,7 @@
 import { Controller, Post, Body, HttpException, HttpStatus, HttpCode } from '@nestjs/common'
 import { UploadService } from './upload.service'
 import { Upload } from '../common/interfaces/global.interface'
+import { v4 as uuidv4 } from 'uuid'
 
 @Controller('upload')
 export class UploadController {
@@ -23,9 +24,13 @@ export class UploadController {
       throw new HttpException(response, HttpStatus.CONFLICT) 
     }
 
-    const measurement = await this.measurementService.createMeasurement(customer, image, measure_datetime, measure_type, 1500)
+    const measureUuid = uuidv4()
+    const uploadMeasurementImageResponse = await this.measurementService.uploadMeasurementImage(measureUuid, image, measure_type)
+    const measureValue = await this.measurementService.getMeasurementValue(uploadMeasurementImageResponse, measure_type)
+
+    const measurement = await this.measurementService.createMeasurement(measureUuid, customer, image, measure_datetime, measure_type, measureValue)
     const response = {
-      "image_url": measurement.image,
+      "image_url": uploadMeasurementImageResponse.file.uri,
       "measure_value": measurement.value,
       "measure_uuid": measurement.uuid
     }

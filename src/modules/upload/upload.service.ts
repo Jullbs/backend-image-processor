@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Customer, Measurement } from '../common/entities/readings.enttity'
 import { Repository } from 'typeorm'
 import { CustomerCode, MeasureType } from '../common/interfaces/global.interface'
-import { v4 as uuidv4 } from 'uuid'
+import { join } from 'path'
+import { writeFileSync } from 'fs'
+import { GoogleAIFileManager, UploadFileResponse } from "@google/generative-ai/server"
+import { GoogleGenerativeAI } from '@google/generative-ai'
+import 'dotenv/config'
 
 @Injectable()
 export class UploadService {
@@ -44,10 +48,45 @@ export class UploadService {
     return Boolean(customerMeasurementInMonth)
   }
 
-  async createMeasurement(customer: Customer, image: string, dateTime: Date, type: MeasureType, value: number) {
-    const measureUuid = uuidv4()
+  async uploadMeasurementImage(uuid: string, image: string, type: MeasureType) {
+    const imageWithoutPrefix = image.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(imageWithoutPrefix, 'base64')
+    const localImagePath = join(__dirname, '..', 'common', `${uuid}.jpg`)
+    writeFileSync(localImagePath, buffer)
+    
+    const fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY!)
+
+    const uploadFileResponse = await fileManager.uploadFile(localImagePath, {
+      mimeType: "image/jpeg",
+      displayName: `${type} Measurement`,
+    })
+
+    return uploadFileResponse
+  }
+
+  async getMeasurementValue(upload: UploadFileResponse, type: string) {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+    const model = genAI.getGenerativeModel({model: "gemini-1.5-flash"})
+    const prompt = `Identify the value of this ${type} measurement and return in the response only the value identified.`
+
+    const generateContentResponse = await model.generateContent([
+      {
+        fileData: {
+          mimeType: upload.file.mimeType,
+          fileUri: upload.file.uri
+        }
+      },
+      { text: prompt }
+    ])
+
+    const measureValue = generateContentResponse.response.text()
+
+    return Number(measureValue)
+  }
+
+  async createMeasurement(uuid: string, customer: Customer, image: string, dateTime: Date, type: MeasureType, value: number) {
     const measurementData = {
-        "uuid": measureUuid,
+        "uuid": uuid,
         "image": image,
         "datetime": dateTime,
         "type": type,

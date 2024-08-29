@@ -5,6 +5,7 @@ import { Customer, Measurement } from './modules/common/entities/readings.enttit
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ListController } from './modules/list/list.controller'
 import { ListService } from './modules/list/list.service'
+import 'dotenv/config'
 
 @Module({
   imports: [
@@ -12,9 +13,9 @@ import { ListService } from './modules/list/list.service'
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'admin',
-      password: 'password',
-      database: 'consumptionreading',
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       entities: [Customer, Measurement],
       synchronize: true,
     }),
