@@ -1,7 +1,9 @@
-import { Controller, Post, Body, HttpException, HttpStatus, HttpCode } from '@nestjs/common'
+import { Controller, Post, Body, HttpException, HttpStatus, HttpCode, UseFilters } from '@nestjs/common'
 import { UploadMeasurementService } from './uploadMeasurement.service'
-import { Upload } from '../../../common/interfaces/global.interface'
+import { UploadMeasurementBodyDTO } from './dto/uploadMeasurement.dto'
 import { v4 as uuidv4 } from 'uuid'
+import { UploadMeasurementValidationFilter } from './dto/uploadMeasurementValidationException.filter'
+
 
 @Controller('upload')
 export class UploadMeasurementController {
@@ -9,8 +11,9 @@ export class UploadMeasurementController {
 
   @Post()
   @HttpCode(200)
-  async uploadMeasurement(@Body() parameters: Upload) {
-    const { customer_code, image, measure_datetime, measure_type } = parameters
+  @UseFilters(UploadMeasurementValidationFilter)
+  async uploadMeasurement(@Body() body: UploadMeasurementBodyDTO) {
+    const { customer_code, image, measure_datetime, measure_type } = body
 
     const customer = await this.measurementService.getCustomer(customer_code)
     const customerHasMeasurementInMonth = await this.measurementService.checkCustomerHasMeasurementInMonth(customer, measure_datetime, measure_type)
@@ -19,7 +22,7 @@ export class UploadMeasurementController {
       const response = {
         "error_code": "DOUBLE_REPORT",
         "error_description": "Leitura do mês já realizada"
-       }
+      }
        
       throw new HttpException(response, HttpStatus.CONFLICT) 
     }

@@ -9,6 +9,7 @@ export class GetMeasurementListParamsDTO {
 
 export class GetMeasurementListQueryDTO {
   @IsOptional()
+  @IsString()
   @Transform(({ value }) => value?.toUpperCase())
   @IsIn(['WATER', 'GAS'])
   measure_type?: MeasureType

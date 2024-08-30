@@ -54,7 +54,7 @@ export class UploadMeasurementService {
 
     const imageWithoutPrefix = image.replace(/^data:image\/\w+;base64,/, '')
     const buffer = Buffer.from(imageWithoutPrefix, 'base64')
-    const localImagePath = join(__dirname, '..', 'common', `${uuid}.jpg`)
+    const localImagePath = join(__dirname, '../../..', 'common', `${uuid}.jpg`)
     writeFileSync(localImagePath, buffer)
     
     const fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY!)
