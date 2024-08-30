@@ -49,6 +49,9 @@ export class UploadService {
   }
 
   async uploadMeasurementImage(uuid: string, image: string, type: MeasureType) {
+    const mimeTypeMatch = image.match(/^data:(image\/\w+);base64,/)
+    const mimeType = mimeTypeMatch[1]
+
     const imageWithoutPrefix = image.replace(/^data:image\/\w+;base64,/, '')
     const buffer = Buffer.from(imageWithoutPrefix, 'base64')
     const localImagePath = join(__dirname, '..', 'common', `${uuid}.jpg`)
@@ -56,7 +59,7 @@ export class UploadService {
     
     const fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY!)
     const uploadFileResponse = await fileManager.uploadFile(localImagePath, {
-      mimeType: "image/jpeg",
+      mimeType: mimeType,
       displayName: `${type} Measurement`,
     })
 

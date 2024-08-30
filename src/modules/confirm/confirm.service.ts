@@ -14,15 +14,7 @@ export class ConfirmService {
     return measurement
   }
 
-  async checkMeasurementStatus(uuid: string) {
-    const measurementStatus = await this.measurementRepository.findOne({where: {uuid}, select: ['confirmed']})
-
-    return measurementStatus.confirmed
-  }
-
-  async confirmMeasurement(uuid: string, value: number) {
-    const measurement = await this.measurementRepository.findOne({where: {uuid}})
-
+  async confirmMeasurement(measurement: Measurement, value: number) {
     measurement.value = value
     measurement.confirmed = true
 

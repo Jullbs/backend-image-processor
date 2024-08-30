@@ -20,7 +20,7 @@ export class ConfirmController{
       throw new HttpException(response, HttpStatus.NOT_FOUND)
     }
 
-    const measurementHasAlreadyBeenConfirmed = await this.confirmService.checkMeasurementStatus(measure_uuid)
+    const measurementHasAlreadyBeenConfirmed = measurement.confirmed
     if (measurementHasAlreadyBeenConfirmed) {
       const response = {
         "error_code": "CONFIRMATION_DUPLICATE",
@@ -30,7 +30,7 @@ export class ConfirmController{
       throw new HttpException(response, HttpStatus.CONFLICT)
     }
 
-    const confirmMeasurementResponse = await this.confirmService.confirmMeasurement(measure_uuid, confirmed_value)
+    const confirmMeasurementResponse = await this.confirmService.confirmMeasurement(measurement, confirmed_value)
 
     const response = {
       "success": true
