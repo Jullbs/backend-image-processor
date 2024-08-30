@@ -4,7 +4,7 @@ import { Customer, Measurement } from '../common/entities/readings.enttity'
 import { Repository } from 'typeorm'
 import { CustomerCode, MeasureType } from '../common/interfaces/global.interface'
 import { join } from 'path'
-import { writeFileSync } from 'fs'
+import { unlinkSync, writeFileSync } from 'fs'
 import { GoogleAIFileManager, UploadFileResponse } from "@google/generative-ai/server"
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import 'dotenv/config'
@@ -61,6 +61,8 @@ export class UploadService {
       displayName: `${type} Measurement`,
     })
 
+    unlinkSync(localImagePath)
+
     return uploadFileResponse
   }
 
@@ -81,7 +83,7 @@ export class UploadService {
 
     const measureValue = generateContentResponse.response.text()
 
-    return Number(measureValue)
+    return parseInt(measureValue)
   }
 
   async createMeasurement(uuid: string, customer: Customer, image: string, dateTime: Date, type: MeasureType, value: number) {

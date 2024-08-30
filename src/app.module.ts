@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ListController } from './modules/list/list.controller'
 import { ListService } from './modules/list/list.service'
 import 'dotenv/config'
+import { ConfirmController } from './modules/confirm/confirm.controller'
+import { ConfirmService } from './modules/confirm/confirm.service'
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import 'dotenv/config'
     }),
     TypeOrmModule.forFeature([Customer, Measurement]),
   ],
-  controllers: [UploadController, ListController],
-  providers: [UploadService, ListService],
+  controllers: [UploadController, ListController, ConfirmController],
+  providers: [UploadService, ListService, ConfirmService],
 })
 export class AppModule {}

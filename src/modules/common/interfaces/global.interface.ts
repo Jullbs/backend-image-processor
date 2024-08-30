@@ -8,3 +8,8 @@ export interface Upload {
   measure_datetime: Date,
   measure_type: MeasureType
 }
+
+export interface Confirm {
+  measure_uuid: string,
+  confirmed_value: number
+}
