@@ -3,7 +3,7 @@ import { Customer, Measurement } from '../common/entities/readings.enttity'
 import { Repository } from 'typeorm'
 import { CustomerCode, MeasureType } from '../common/interfaces/global.interface'
 
-export class ListService {
+export class MeasurementListService {
   constructor(
     @InjectRepository(Customer)
     private customerRepository: Repository<Customer>,

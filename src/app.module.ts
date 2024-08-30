@@ -3,8 +3,8 @@ import { UploadController } from './modules/upload/upload.controller'
 import { UploadService } from './modules/upload/upload.service'
 import { Customer, Measurement } from './modules/common/entities/readings.enttity'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { ListController } from './modules/list/list.controller'
-import { ListService } from './modules/list/list.service'
+import { MeasurementListController } from './modules/measurementList/measurementList.controller'
+import { MeasurementListService } from './modules/measurementList/measurementList.service'
 import { ConfirmController } from './modules/confirm/confirm.controller'
 import { ConfirmService } from './modules/confirm/confirm.service'
 import 'dotenv/config'
@@ -23,7 +23,7 @@ import 'dotenv/config'
     }),
     TypeOrmModule.forFeature([Customer, Measurement]),
   ],
-  controllers: [UploadController, ListController, ConfirmController],
-  providers: [UploadService, ListService, ConfirmService],
+  controllers: [UploadController, MeasurementListController, ConfirmController],
+  providers: [UploadService, MeasurementListService, ConfirmService],
 })
 export class AppModule {}
