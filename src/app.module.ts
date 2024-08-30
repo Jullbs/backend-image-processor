@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
 import { UploadController } from './modules/upload/upload.controller'
 import { UploadService } from './modules/upload/upload.service'
-import { Customer, Measurement } from './modules/common/entities/readings.enttity'
+import { Customer, Measurement } from './common/entities/readings.enttity'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { MeasurementListController } from './modules/measurementList/measurementList.controller'
-import { MeasurementListService } from './modules/measurementList/measurementList.service'
-import { ConfirmController } from './modules/confirm/confirm.controller'
-import { ConfirmService } from './modules/confirm/confirm.service'
+import { ListMeasurementController } from './modules/listMeasurement/listMeasurement.controller'
+import { ListMeasurementService } from './modules/listMeasurement/listMeasurement.service'
+import { ConfirmController } from './modules/confirmMeasurement/confirm.controller'
+import { ConfirmService } from './modules/confirmMeasurement/confirm.service'
 import 'dotenv/config'
 
 @Module({
@@ -23,7 +23,7 @@ import 'dotenv/config'
     }),
     TypeOrmModule.forFeature([Customer, Measurement]),
   ],
-  controllers: [UploadController, MeasurementListController, ConfirmController],
-  providers: [UploadService, MeasurementListService, ConfirmService],
+  controllers: [UploadController, ListMeasurementController, ConfirmController],
+  providers: [UploadService, ListMeasurementService, ConfirmService],
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Body, Controller, HttpException, HttpStatus, Patch } from "@nestjs/common"
-import { Confirm } from "../common/interfaces/global.interface"
+import { Confirm } from "../../common/interfaces/global.interface"
 import { ConfirmService } from "./confirm.service"
 
 @Controller()

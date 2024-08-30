@@ -1,6 +1,6 @@
 import { Controller, Post, Body, HttpException, HttpStatus, HttpCode } from '@nestjs/common'
 import { UploadService } from './upload.service'
-import { Upload } from '../common/interfaces/global.interface'
+import { Upload } from '../../common/interfaces/global.interface'
 import { v4 as uuidv4 } from 'uuid'
 
 @Controller('upload')

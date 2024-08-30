@@ -1,12 +1,12 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Query, UseFilters } from "@nestjs/common"
-import { MeasurementListService } from "./measurementList.service"
+import { ListMeasurementService } from "./listMeasurement.service"
 import { GetMeasurementListParamsDTO, GetMeasurementListQueryDTO } from "./dto/measurementList.dto"
 import { GetMeasurementListValidationFilter } from "./dto/validation-exception.filter"
 
 
 @Controller()
-export class MeasurementListController{
-  constructor(private readonly listService: MeasurementListService) {}
+export class ListMeasurementController{
+  constructor(private readonly listService: ListMeasurementService) {}
 
   @Get(':customer_code/list')
   @UseFilters(GetMeasurementListValidationFilter)

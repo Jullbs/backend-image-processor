@@ -1,5 +1,5 @@
 import { IsIn, IsOptional, IsString } from "class-validator"
-import { MeasureType } from "../../common/interfaces/global.interface"
+import { MeasureType } from "../../../common/interfaces/global.interface"
 import { Transform } from "class-transformer"
 
 export class GetMeasurementListParamsDTO {
