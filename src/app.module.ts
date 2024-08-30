@@ -5,9 +5,9 @@ import { Customer, Measurement } from './modules/common/entities/readings.enttit
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ListController } from './modules/list/list.controller'
 import { ListService } from './modules/list/list.service'
-import 'dotenv/config'
 import { ConfirmController } from './modules/confirm/confirm.controller'
 import { ConfirmService } from './modules/confirm/confirm.service'
+import 'dotenv/config'
 
 @Module({
   imports: [
