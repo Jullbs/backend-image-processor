@@ -1,6 +1,6 @@
 import { ArgumentsHost, BadRequestException, Catch, ExceptionFilter, HttpException } from '@nestjs/common'
   
-@Catch()
+@Catch(HttpException)
 export class ConfirmMeasurementValidationFilter < T > implements ExceptionFilter {
   catch (exception: HttpException, host: ArgumentsHost) {
     const response = host.switchToHttp().getResponse()
@@ -14,15 +14,8 @@ export class ConfirmMeasurementValidationFilter < T > implements ExceptionFilter
 
       response.status(exception.getStatus())
         .json(customResponse)
-    } else if (exception instanceof HttpException) {
-      response.status(exception.getStatus()).json(exception.getResponse())
     } else {
-      const customResponse = {
-        error_code: "INTERNAL_SERVER_ERROR",
-        error_description: "An unexpected error occurred.",
-      }
-
-      response.status(500).json(customResponse)
+      response.status(exception.getStatus()).json(exception.getResponse())
     }
   }
 }
