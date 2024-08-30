@@ -14,8 +14,15 @@ export class ConfirmMeasurementValidationFilter < T > implements ExceptionFilter
 
       response.status(exception.getStatus())
         .json(customResponse)
-    } else {
+    } else if (exception instanceof HttpException) {
       response.status(exception.getStatus()).json(exception.getResponse())
+    } else {
+      const customResponse = {
+        error_code: "INTERNAL_SERVER_ERROR",
+        error_description: "An unexpected error occurred.",
+      }
+
+      response.status(500).json(customResponse)
     }
   }
 }

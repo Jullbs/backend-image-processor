@@ -12,6 +12,18 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - backend_network
+  
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    networks:
+      - backend_network
 
 networks:
   backend_network:

@@ -12,8 +12,16 @@ export class ListMeasurementController{
   @UseFilters(GetMeasurementListValidationFilter)
   async getMeasurementList(@Param() params: GetMeasurementListParamsDTO, @Query() query: GetMeasurementListQueryDTO) {
     const customer = await this.listService.getCustomer(params.customer_code)
-    const measurements = await this.listService.getMeasurements(customer, query.measure_type)
+    if (!customer) {
+      const response = {
+        "error_code": "CUSTOMER_NOT_FOUND",
+        "error_description": "Esse cliente não foi encontrado"
+      }
 
+      throw new HttpException(response, HttpStatus.NOT_FOUND) 
+    }
+
+    const measurements = await this.listService.getMeasurements(customer, query.measure_type)
     if (measurements.length === 0) {
       const response = {
         "error_code": "MEASURES_NOT_FOUND",

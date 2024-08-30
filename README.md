@@ -8,7 +8,7 @@ This application deploys a Postgres database and the backend application using D
 
 ### 💨 Run?
 If you want to run in your machine, just clone it from github and type on the terminal:
-     docker-compose up -d
+     docker-compose up --build -d
      
 
 ### 💧 Who?
