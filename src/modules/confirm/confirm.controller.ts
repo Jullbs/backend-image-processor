@@ -1,6 +1,6 @@
-import { Body, Controller, HttpException, HttpStatus, Param, Patch, Query } from "@nestjs/common";
-import { Confirm } from "../common/interfaces/global.interface";
-import { ConfirmService } from "./confirm.service";
+import { Body, Controller, HttpException, HttpStatus, Patch } from "@nestjs/common"
+import { Confirm } from "../common/interfaces/global.interface"
+import { ConfirmService } from "./confirm.service"
 
 @Controller()
 export class ConfirmController{
@@ -13,9 +13,9 @@ export class ConfirmController{
     const measurement = await this.confirmService.getMeasurement(measure_uuid)
     if (!measurement) {
       const response = {
-          "error_code": "MEASURE_NOT_FOUND",
-          "error_description": "Leitura do mês já realizada"
-          }
+        "error_code": "MEASURE_NOT_FOUND",
+        "error_description": "Leitura do mês já realizada"
+      }
 
       throw new HttpException(response, HttpStatus.NOT_FOUND)
     }
@@ -35,7 +35,6 @@ export class ConfirmController{
     const response = {
       "success": true
     }
-    
     return response
   }
 }

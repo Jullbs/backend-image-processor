@@ -49,13 +49,12 @@ export class UploadService {
   }
 
   async uploadMeasurementImage(uuid: string, image: string, type: MeasureType) {
-    const imageWithoutPrefix = image.replace(/^data:image\/\w+;base64,/, '');
+    const imageWithoutPrefix = image.replace(/^data:image\/\w+;base64,/, '')
     const buffer = Buffer.from(imageWithoutPrefix, 'base64')
     const localImagePath = join(__dirname, '..', 'common', `${uuid}.jpg`)
     writeFileSync(localImagePath, buffer)
     
     const fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY!)
-
     const uploadFileResponse = await fileManager.uploadFile(localImagePath, {
       mimeType: "image/jpeg",
       displayName: `${type} Measurement`,
@@ -82,7 +81,6 @@ export class UploadService {
     ])
 
     const measureValue = generateContentResponse.response.text()
-
     return parseInt(measureValue)
   }
 
@@ -96,7 +94,6 @@ export class UploadService {
         "confirmed": false,
         "customer": customer
       }
-
 
     const newMeasurement = this.measurementRepository.create(measurementData)
     return await this.measurementRepository.save(newMeasurement)

@@ -1,6 +1,6 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Query } from "@nestjs/common";
-import { ListService } from "./list.service";
-import { MeasureType } from "../common/interfaces/global.interface";
+import { Controller, Get, HttpException, HttpStatus, Param, Query } from "@nestjs/common"
+import { ListService } from "./list.service"
+import { MeasureType } from "../common/interfaces/global.interface"
 
 @Controller()
 export class ListController{
