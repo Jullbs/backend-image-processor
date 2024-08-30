@@ -1,7 +1,7 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Query, UseFilters } from "@nestjs/common"
 import { ListMeasurementService } from "./listMeasurement.service"
-import { GetMeasurementListParamsDTO, GetMeasurementListQueryDTO } from "./dto/measurementList.dto"
-import { GetMeasurementListValidationFilter } from "./dto/validation-exception.filter"
+import { GetMeasurementListParamsDTO, GetMeasurementListQueryDTO } from "./dto/listMeasurement.dto"
+import { GetMeasurementListValidationFilter } from "./dto/listMeasurementValidationException.filter"
 
 
 @Controller()

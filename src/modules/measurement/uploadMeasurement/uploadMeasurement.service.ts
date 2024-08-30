@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Customer, Measurement } from '../../common/entities/readings.enttity'
+import { Customer, Measurement } from '../../../common/entities/readings.enttity'
 import { Repository } from 'typeorm'
-import { CustomerCode, MeasureType } from '../../common/interfaces/global.interface'
+import { CustomerCode, MeasureType } from '../../../common/interfaces/global.interface'
 import { join } from 'path'
 import { unlinkSync, writeFileSync } from 'fs'
 import { GoogleAIFileManager, UploadFileResponse } from "@google/generative-ai/server"
@@ -10,7 +10,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 import 'dotenv/config'
 
 @Injectable()
-export class UploadService {
+export class UploadMeasurementService {
   constructor(
     @InjectRepository(Customer)
     private customerRepository: Repository<Customer>,

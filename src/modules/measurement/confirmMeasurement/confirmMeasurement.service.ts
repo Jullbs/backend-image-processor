@@ -1,8 +1,8 @@
 import { InjectRepository } from '@nestjs/typeorm'
-import { Measurement } from '../../common/entities/readings.enttity'
+import { Measurement } from '../../../common/entities/readings.enttity'
 import { Repository } from 'typeorm'
 
-export class ConfirmService {
+export class ConfirmMeasurementService {
   constructor(
     @InjectRepository(Measurement)
     private measurementRepository: Repository<Measurement>

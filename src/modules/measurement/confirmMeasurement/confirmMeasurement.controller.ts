@@ -1,14 +1,16 @@
-import { Body, Controller, HttpException, HttpStatus, Patch } from "@nestjs/common"
-import { Confirm } from "../../common/interfaces/global.interface"
-import { ConfirmService } from "./confirm.service"
+import { Body, Controller, HttpException, HttpStatus, Patch, UseFilters } from "@nestjs/common"
+import { ConfirmMeasurementService } from "./confirmMeasurement.service"
+import { ConfirmMeasurementBodyDTO } from "./dto/confirmMeasurement.dto"
+import { ConfirmMeasurementValidationFilter } from "./dto/confirmMeasurementValidationException.filter"
 
 @Controller()
-export class ConfirmController{
-  constructor(private readonly confirmService: ConfirmService) {}
+export class ConfirmMeasurementController{
+  constructor(private readonly confirmService: ConfirmMeasurementService) {}
 
   @Patch('confirm')
-  async confirmMeasurement(@Body() parameters: Confirm) {
-    const { measure_uuid, confirmed_value } = parameters
+  @UseFilters(ConfirmMeasurementValidationFilter)
+  async confirmMeasurement(@Body() body: ConfirmMeasurementBodyDTO) {
+    const { measure_uuid, confirmed_value } = body
 
     const measurement = await this.confirmService.getMeasurement(measure_uuid)
     if (!measurement) {

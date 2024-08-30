@@ -1,11 +1,11 @@
 import { Controller, Post, Body, HttpException, HttpStatus, HttpCode } from '@nestjs/common'
-import { UploadService } from './upload.service'
-import { Upload } from '../../common/interfaces/global.interface'
+import { UploadMeasurementService } from './uploadMeasurement.service'
+import { Upload } from '../../../common/interfaces/global.interface'
 import { v4 as uuidv4 } from 'uuid'
 
 @Controller('upload')
-export class UploadController {
-  constructor(private readonly measurementService: UploadService) {}
+export class UploadMeasurementController {
+  constructor(private readonly measurementService: UploadMeasurementService) {}
 
   @Post()
   @HttpCode(200)
