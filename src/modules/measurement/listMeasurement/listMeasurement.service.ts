@@ -19,7 +19,7 @@ export class ListMeasurementService {
   }
 
   async getMeasurements(customer: Customer, type?: MeasureType) {
-    const measurements = await this.measurementRepository
+    const query = this.measurementRepository
     .createQueryBuilder('measurement')
     .select([
       'measurement.uuid AS measure_uuid',
@@ -29,9 +29,12 @@ export class ListMeasurementService {
       'measurement.image AS image_url'
     ])
     .where('measurement.customerId = :customerId', { customerId: customer.id })
-    .andWhere('measurement.type = :type', { type })
-    .getRawMany()
 
+    if (type) {
+      query.andWhere('measurement.type = :type', { type })
+    }
+
+    const measurements = await query.getRawMany()
     return measurements
   }
 }
