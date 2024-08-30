@@ -9,6 +9,10 @@ This application deploys a Postgres database and the backend application using D
 ### 💨 Run?
 If you want to run in your machine, just clone it from github and type on the terminal:
      docker-compose up --build -d
+The application listens on port 3000 and it contains this routes:
+- POST /upload
+- PATCH /confirm
+- GET /<customer_code>/list?measure_type=<measure_type>
      
 
 ### 💧 Who?
