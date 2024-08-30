@@ -31,9 +31,10 @@ export class UploadMeasurementController {
     const uploadMeasurementImageResponse = await this.measurementService.uploadMeasurementImage(measureUuid, image, measure_type)
     const measureValue = await this.measurementService.getMeasurementValue(uploadMeasurementImageResponse, measure_type)
 
-    const measurement = await this.measurementService.createMeasurement(measureUuid, customer, image, measure_datetime, measure_type, measureValue)
+    const imageUrl = uploadMeasurementImageResponse.file.uri
+    const measurement = await this.measurementService.createMeasurement(measureUuid, customer, imageUrl, measure_datetime, measure_type, measureValue)
     const response = {
-      "image_url": uploadMeasurementImageResponse.file.uri,
+      "image_url": imageUrl,
       "measure_value": measurement.value,
       "measure_uuid": measurement.uuid
     }
